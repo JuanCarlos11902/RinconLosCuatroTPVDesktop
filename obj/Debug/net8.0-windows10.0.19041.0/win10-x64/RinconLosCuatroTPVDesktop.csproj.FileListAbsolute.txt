@@ -247,3 +247,4 @@ C:\Users\Vanguard\source\repos\RinconLosCuatroTPVDesktop\RinconLosCuatroTPVDeskt
 C:\Users\Vanguard\source\repos\RinconLosCuatroTPVDesktop\RinconLosCuatroTPVDesktop\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\NAudio.Wasapi.dll
 C:\Users\Vanguard\source\repos\RinconLosCuatroTPVDesktop\RinconLosCuatroTPVDesktop\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\NAudio.WinForms.dll
 C:\Users\Vanguard\source\repos\RinconLosCuatroTPVDesktop\RinconLosCuatroTPVDesktop\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\NAudio.WinMM.dll
+C:\Users\Vanguard\source\repos\RinconLosCuatroTPVDesktop\RinconLosCuatroTPVDesktop\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\RinconLosCuatroTPVDesktop.sourcelink.json

@@ -1,5 +1,4 @@
-﻿using Humanizer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -8,19 +7,16 @@ using System.Threading.Tasks;
 
 namespace rinconLosCuatroTPVDesktop.MVVM.Converters
 {
-    class DateHumanizer : IValueConverter
+    internal class IdConverter : IValueConverter
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is DateTime)
+
+            if (value.Equals("hidden"))
             {
-                DateTime date = (DateTime)value;
-                return date.Humanize();
+                return false;
             }
-            else
-            {
-                return null;
-            }
+            return true;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

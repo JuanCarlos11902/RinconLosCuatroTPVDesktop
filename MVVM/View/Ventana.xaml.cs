@@ -61,4 +61,18 @@ public partial class Ventana : TabbedPage
         Image image = grid.FindByName<Image>("CheckmarkIcon");
         image.IsVisible = !image.IsVisible;
     }
+
+    private void Button_Clicked_OrderCompleted(object sender, EventArgs e)
+    {
+        Button button = (Button)sender;
+        var order = (Order)button.BindingContext;
+
+        viewModel.completeOrder(order);
+    }
+
+    private void Button_Clicked_CerrarCaja(object sender, EventArgs e)
+    {
+        viewModel.Check.CheckStatus = "closed";
+        viewModel.updateCheck();
+    }
 }

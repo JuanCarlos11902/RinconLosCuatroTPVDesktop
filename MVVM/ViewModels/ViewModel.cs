@@ -1,10 +1,12 @@
-﻿using NAudio.Wave;
+﻿using Microsoft.Maui.Controls;
+using NAudio.Wave;
 using PropertyChanged;
 using rinconLosCuatroTPVDesktop.MVVM.Models;
 using rinconLosCuatroTPVDesktop.Services;
 using RinconLosCuatroTPVDesktop;
-
+using RinconLosCuatroTPVDesktop.MVVM.Models;
 using RinconLosCuatroTPVDesktop.Services;
+using SocketIOClient;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -12,7 +14,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace rinconLosCuatroTPVDesktop.MVVM.ViewModels
 {
@@ -20,54 +24,84 @@ namespace rinconLosCuatroTPVDesktop.MVVM.ViewModels
     public class ViewModel
     {
 
+        private SocketIOClient.SocketIO Socket { get; set; }
+
         public ObservableCollection<Producto> ProductList { get; set; }
 
         public ObservableCollection<Producto> FilteredProductList { get; set; }
 
         public WebSocketService WebSocketService { get; set; }
-        public ObservableCollection<Order> Pedidos { get; set; }
+        public ObservableCollection<Order> Pedidos { get; set; } = new ObservableCollection<Order>();
 
         public ServicioHttp Service { get; set; }
 
         public List<string> ListaTipos { get; set; }
 
-        public Boolean isEditMode { get; set; }
+        public bool isEditMode { get; set; }
 
         public Producto ActualProduct { get; set; }
+
+        public Check Check { get; set; }
         public ViewModel()
+        {
+            init();
+        }
+
+        public async void init()
         {
             Service = new ServicioHttp();
             getProducts();
+            Pedidos.Add(new Order("hidden"));
             ListaTipos = new List<string> { "Comida", "Bebida" };
-            getOrders();
-            WebSocketService = new WebSocketService();
-            WebSocketService.OrderAddedEvent += RefreshOrders;
-
+            await getOrders();
+            getCheckOfToday();
+            ConnectWebSocket().ConfigureAwait(false);
         }
 
-        private async void RefreshOrders(object sender, EventArgs e)
+        private async Task ConnectWebSocket()
         {
-           
+
             try
             {
-               List<Order> orders = await Service.getAllOrdersOfToday();
-               
-                Device.BeginInvokeOnMainThread(async () =>
+                Socket = new SocketIOClient.SocketIO("http://127.0.0.1:3000", new SocketIOOptions()
                 {
-                    foreach (Order item in orders)
-                    {
-                        if (!isOrderAlreadyInList(item))
-                        {
-                            Pedidos.Add(item);
-                        }
-                    }
+                    Reconnection = true,
+                    Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
+                });
 
+                Socket.OnConnected += (sender, e) =>
+                {
+                    Console.WriteLine("Connected");
+                };
+
+                Socket.OnDisconnected += (sender, e) =>
+                {
+                    Console.WriteLine("Disconnected");
+                };
+
+                Socket.OnReconnectAttempt += (sender, e) =>
+                {
+                    Console.WriteLine("Reconnecting");
+                };
+
+                Socket.On("orderAdded", async (data) =>
+                {
+                    string cadena = data.ToString();
+                    var order = System.Text.Json.JsonSerializer.Deserialize<List<Order>>(cadena, new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                        PropertyNameCaseInsensitive = true
+                    });
+                    Pedidos.Add(order[0]);
                     await newOrderSound();
                 });
+                await Socket.ConnectAsync();
+
+
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine("Error: " + e.Message);
             }
         }
 
@@ -78,27 +112,15 @@ namespace rinconLosCuatroTPVDesktop.MVVM.ViewModels
             FilteredProductList = ProductList;
         }
 
-        private Boolean isOrderAlreadyInList(Order order)
-        {
-            Boolean flag = false;
-            foreach (Order currentOrder in Pedidos)
-            {
-                if (order.Id == currentOrder.Id)
-                {
-                    flag =  true;
-                }
-
-            }
-
-            return flag;
-        }
-
         async public Task getOrders()
         {
             var orders = await Service.getAllOrdersOfToday();
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                Pedidos = new ObservableCollection<Order>(orders);
+                foreach (var order in orders)
+                {
+                    Pedidos.Add(order);
+                }
             });
         }
 
@@ -114,7 +136,7 @@ namespace rinconLosCuatroTPVDesktop.MVVM.ViewModels
 
         }
 
-        public async void addProduct(string name,string description, Int32 price, bool availability, string type, string image)
+        public async void addProduct(string name,string description, Double price, bool availability, string type, string image)
         {
 
             string cadena = "";
@@ -169,7 +191,7 @@ namespace rinconLosCuatroTPVDesktop.MVVM.ViewModels
                 Service.changeAvailability(product);
         }
 
-        public async void updateProduct(Producto producto, string name, string description, Int16 price, bool availability, string type, string image)
+        public async void updateProduct(Producto producto, string name, string description, Double price, bool availability, string type, string image)
         {
 
             string imageString = "";
@@ -217,20 +239,51 @@ namespace rinconLosCuatroTPVDesktop.MVVM.ViewModels
 
         private async Task newOrderSound()
         {
-            using (var audioFile = new AudioFileReader("C:\\Users\\Vanguard\\source\\repos\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop\\Resources\\Sounds\\new-order.mp3"))
+            try
             {
-                using(var outputDevice = new WaveOutEvent())
+                using (var audioFile = new AudioFileReader("C:\\Users\\Vanguard\\source\\repos\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop\\Resources\\Sounds\\new-order.mp3"))
                 {
-                    outputDevice.Init(audioFile);
-                    outputDevice.Play();
-
-                    while (outputDevice.PlaybackState == PlaybackState.Playing)
+                    using (var outputDevice = new WaveOutEvent())
                     {
-                        System.Threading.Thread.Sleep(1000);
-                    }
+                        outputDevice.Init(audioFile);
+                        outputDevice.Play();
 
+                        while (outputDevice.PlaybackState == PlaybackState.Playing)
+                        {
+                            System.Threading.Thread.Sleep(1000);
+                        }
+
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
+
+        public async void completeOrder(Order order)
+        {
+            order.OrderStatus = "completed";
+            Service.completeOrder(order);
+            Check.Orders.Add(order);
+            Check.TotalPrice += order.TotalPrice;
+            Pedidos.Remove(order);
+            updateCheck();
+        }
+
+        public async void getCheckOfToday()
+        {
+            Check = await Service.getCheckOfToday();
+            if (Check.Orders.Count == 0 && Check.TotalPrice == 0 && Check.CheckStatus.Equals("notCreated"))
+            {
+                Check = await Service.createCheck();
+            }
+        }
+
+        public async void updateCheck()
+        {
+            Service.updateCheck(Check);
+        }   
     }
 }

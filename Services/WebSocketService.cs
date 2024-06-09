@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using rinconLosCuatroTPVDesktop.MVVM.Models;
 using SocketIOClient;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace RinconLosCuatroTPVDesktop.Services
 {
@@ -11,8 +14,6 @@ namespace RinconLosCuatroTPVDesktop.Services
         public string Error { get; private set; }
 
         public event EventHandler<Order> OrderAdded;
-
-        public event EventHandler OrderAddedEvent;
 
         public WebSocketService()
         {
@@ -29,7 +30,7 @@ namespace RinconLosCuatroTPVDesktop.Services
                     Reconnection = true,
                     Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
                 });
-                
+
                 Socket.OnConnected += (sender, e) =>
                 {
                     IsConnected = true;
@@ -49,11 +50,16 @@ namespace RinconLosCuatroTPVDesktop.Services
 
                 Socket.On("orderAdded", (data) =>
                 {
+                    String cadena = data.ToString();
+                    var order = System.Text.Json.JsonSerializer.Deserialize<List<Order>>(cadena, new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                        PropertyNameCaseInsensitive = true
+                    });
 
-                    OrderAddedEvent?.Invoke(this, EventArgs.Empty);
+                    OrderAdded.Invoke(this, order[0]);
 
                 });
-
                 await Socket.ConnectAsync();
 
 
@@ -63,18 +69,6 @@ namespace RinconLosCuatroTPVDesktop.Services
                 Error = e.Message;
                 Console.WriteLine("Error: " + Error);
             }
-        }
-
-        protected virtual void OnOrderAdded(Order order)
-        {
-            try
-            {
-                OrderAdded?.Invoke(this, order);
-            }catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            
         }
 
         private class OrderWrapper

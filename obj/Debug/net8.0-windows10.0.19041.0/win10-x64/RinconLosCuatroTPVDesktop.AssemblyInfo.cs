@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RinconLosCuatroTPVDesktop")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+852ab0dd5e27e9bd57a38b8edcde26a285413cce")]
 [assembly: System.Reflection.AssemblyProductAttribute("RinconLosCuatroTPVDesktop")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RinconLosCuatroTPVDesktop")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

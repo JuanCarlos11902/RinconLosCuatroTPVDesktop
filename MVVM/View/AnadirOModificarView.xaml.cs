@@ -44,7 +44,7 @@ public partial class AnadirOModificarView : ContentPage
         Producto producto = viewModel.ActualProduct;
         string name = NameEntry.Text;
         string description = DescriptionEntry.Text;
-        Int16 price = Convert.ToInt16(PriceEntry.Text);
+        Double price = Convert.ToDouble(PriceEntry.Text);
         bool availability = AvailabilitySwitch.IsToggled;
         string type;
         try

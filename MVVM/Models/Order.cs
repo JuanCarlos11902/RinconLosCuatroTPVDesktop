@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
+using PropertyChanged;
 
 namespace rinconLosCuatroTPVDesktop.MVVM.Models
 {
+    [AddINotifyPropertyChangedInterface]
     public class Order
     {
         [JsonPropertyName("_id")]
@@ -16,7 +18,7 @@ namespace rinconLosCuatroTPVDesktop.MVVM.Models
         [JsonPropertyName("products")]
         public List<Producto> Productos { get; set; }
         [JsonPropertyName("totalPrice")]
-        public Int16 TotalPrice { get; set; }
+        public Double TotalPrice { get; set; }
         [JsonPropertyName("orderDescription")]
         public String OrderDescription { get; set; }
 
@@ -24,6 +26,11 @@ namespace rinconLosCuatroTPVDesktop.MVVM.Models
         public String OrderStatus { get; set; }
         [JsonPropertyName("date")]
         public DateTime Date { get; set; }
+
+        public Order(string id)
+        {
+            Id = id;
+        }
 
     }
 }

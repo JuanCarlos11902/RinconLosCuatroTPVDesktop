@@ -1,4 +1,5 @@
 ﻿using rinconLosCuatroTPVDesktop.MVVM.Models;
+using RinconLosCuatroTPVDesktop.MVVM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace rinconLosCuatroTPVDesktop.Services
 {
-    
+
     public class ServicioHttp
     {
         private HttpClient HttpClient { get; set; }
@@ -26,10 +27,10 @@ namespace rinconLosCuatroTPVDesktop.Services
             string json = await response.Content.ReadAsStringAsync();
             var listaProducto = JsonSerializer.Deserialize<List<Producto>>(json);
             return listaProducto;
-            
+
         }
 
-        public async Task<Producto> addProduct(string name, string description, Int32 price, bool availability, string type, string image)
+        public async Task<Producto> addProduct(string name, string description, Double price, bool availability, string type, string image)
         {
             var formData = new MultipartFormDataContent();
             formData.Add(new StringContent(name), "name");
@@ -38,7 +39,7 @@ namespace rinconLosCuatroTPVDesktop.Services
             formData.Add(new StringContent(price.ToString()), "price");
             formData.Add(new StringContent(availability.ToString()), "availability");
             formData.Add(new StringContent(type), "type");
-            
+
             var fileStreamContent = new StreamContent(File.OpenRead(image));
             formData.Add(fileStreamContent, "image", Path.GetFileName(image));
             Producto producto = null;
@@ -49,15 +50,15 @@ namespace rinconLosCuatroTPVDesktop.Services
                 response.EnsureSuccessStatusCode();
                 string json = await response.Content.ReadAsStringAsync();
                 producto = JsonSerializer.Deserialize<Producto>(json);
-                
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
             return producto;
-            
+
         }
 
         public async void deleteProduct(Producto product)
@@ -79,7 +80,7 @@ namespace rinconLosCuatroTPVDesktop.Services
             try
             {
                 string endpoint = "products/changeAvailability/" + product.Id;
-                var response = await HttpClient.PatchAsync(endpoint,null);
+                var response = await HttpClient.PatchAsync(endpoint, null);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception e)
@@ -122,7 +123,54 @@ namespace rinconLosCuatroTPVDesktop.Services
             string json = await response.Content.ReadAsStringAsync();
             List<Order> lista = JsonSerializer.Deserialize<List<Order>>(json);
             return lista;
-
         }
+
+        public async void completeOrder(Order order)
+        {
+            string endpoint = "order/completeOrder/" + order.Id;
+
+            var json = JsonSerializer.Serialize(new { orderStatus = order.OrderStatus.ToString() });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await HttpClient.PatchAsync(endpoint, content);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task<Check> createCheck()
+        {
+            string endpoint = "check/add";
+            var response = await HttpClient.PostAsync(endpoint, null);
+            response.EnsureSuccessStatusCode();
+            string json = await response.Content.ReadAsStringAsync();
+            Check check = JsonSerializer.Deserialize<Check>(json);
+
+            return check;
+        }
+
+        public async Task<Check> getCheckOfToday()
+        {
+            string endpoint = "check/getCheckOfToday";
+            var response = await HttpClient.GetAsync(endpoint);
+            response.EnsureSuccessStatusCode();
+            string json = await response.Content.ReadAsStringAsync();
+            var check = JsonSerializer.Deserialize<Check>(json);
+
+            return check;
+        }
+
+        public async void updateCheck(Check check)
+        {
+            string endpoint = "check/update/" + check.Id;
+            var jsonContent = new StringContent(JsonSerializer.Serialize(new
+            {
+                totalPrice = check.TotalPrice,
+                checkStatus = check.CheckStatus,
+                orders = check.Orders
+            }), Encoding.UTF8, "application/json");
+
+            var response = await HttpClient.PatchAsync(endpoint, jsonContent);
+            response.EnsureSuccessStatusCode();
+
+        }   
     }
 }

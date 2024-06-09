@@ -19,14 +19,13 @@ namespace rinconLosCuatroTPVDesktop.MVVM.Models
         [JsonPropertyName("description")]
         public String Description { get; set; }
         [JsonPropertyName("price")]
-        public Int16 Price { get; set; }
+        public Double Price { get; set; }
         [JsonPropertyName("availability")]
         public Boolean Availability { get; set; }
         [JsonPropertyName("type")]
         public String Type { get; set; }
         [JsonPropertyName("image")]
         public ImageData Image { get; set; }
-
 
     }
 }
