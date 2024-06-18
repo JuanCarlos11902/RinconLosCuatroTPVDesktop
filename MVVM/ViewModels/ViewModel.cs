@@ -63,7 +63,7 @@ namespace rinconLosCuatroTPVDesktop.MVVM.ViewModels
 
             try
             {
-                Socket = new SocketIOClient.SocketIO("http://127.0.0.1:3000", new SocketIOOptions()
+                Socket = new SocketIOClient.SocketIO("https://floating-caverns-13553-5b60c3be1747.herokuapp.com/", new SocketIOOptions()
                 {
                     Reconnection = true,
                     Transport = SocketIOClient.Transport.TransportProtocol.WebSocket

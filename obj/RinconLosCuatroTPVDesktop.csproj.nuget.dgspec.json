@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vanguard\\source\\repos\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop.csproj": {}
+    "D:\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vanguard\\source\\repos\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop.csproj": {
+    "D:\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vanguard\\source\\repos\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop.csproj",
+        "projectUniqueName": "D:\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop.csproj",
         "projectName": "RinconLosCuatroTPVDesktop",
-        "projectPath": "C:\\Users\\Vanguard\\source\\repos\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop.csproj",
-        "packagesPath": "C:\\Users\\Vanguard\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vanguard\\source\\repos\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop\\obj\\",
+        "projectPath": "D:\\RinconLosCuatroTPVDesktop\\RinconLosCuatroTPVDesktop.csproj",
+        "packagesPath": "C:\\Users\\NitroPC\\.nuget\\packages\\",
+        "outputPath": "D:\\RinconLosCuatroTPVDesktop\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Vanguard\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\NitroPC\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -76,16 +76,16 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.0.40, )"
             },
             "Microsoft.Maui.Controls.Compatibility": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.0.40, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.4, )",
+              "version": "[8.0.6, )",
               "autoReferenced": true
             },
             "NAudio": {
@@ -152,7 +152,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
         },
         "net8.0-ios17.2": {
           "targetAlias": "net8.0-ios",
@@ -167,16 +167,16 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.0.40, )"
             },
             "Microsoft.Maui.Controls.Compatibility": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.0.40, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.4, )",
+              "version": "[8.0.6, )",
               "autoReferenced": true
             },
             "NAudio": {
@@ -231,7 +231,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
         },
         "net8.0-maccatalyst17.2": {
           "targetAlias": "net8.0-maccatalyst",
@@ -246,16 +246,16 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.0.40, )"
             },
             "Microsoft.Maui.Controls.Compatibility": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.0.40, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.4, )",
+              "version": "[8.0.6, )",
               "autoReferenced": true
             },
             "NAudio": {
@@ -311,7 +311,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
         },
         "net8.0-windows10.0.19041": {
           "targetAlias": "net8.0-windows10.0.19041.0",
@@ -326,11 +326,11 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.0.40, )"
             },
             "Microsoft.Maui.Controls.Compatibility": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.0.40, )"
             },
             "NAudio": {
               "target": "Package",
@@ -390,7 +390,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

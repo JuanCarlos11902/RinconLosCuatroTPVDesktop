@@ -1,1 +1,1 @@
-C:\Users\Vanguard\source\repos\RinconLosCuatroTPVDesktop\RinconLosCuatroTPVDesktop\RinconLosCuatroTPVDesktop.csproj;x64
+D:\RinconLosCuatroTPVDesktop\RinconLosCuatroTPVDesktop.csproj;x64

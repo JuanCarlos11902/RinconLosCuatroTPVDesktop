@@ -74,5 +74,6 @@ public partial class Ventana : TabbedPage
     {
         viewModel.Check.CheckStatus = "closed";
         viewModel.updateCheck();
+        viewModel.Check.TotalPrice = 0;
     }
 }
